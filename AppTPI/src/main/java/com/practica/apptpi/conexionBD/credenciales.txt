@@ -1,0 +1,3 @@
+jdbc:sqlserver://localhost;databaseName=proyectoBD
+sa
+1234
