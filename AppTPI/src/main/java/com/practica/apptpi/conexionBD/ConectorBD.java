@@ -14,7 +14,7 @@ public class ConectorBD {
     private static String PASS = "";
     
     public static String[] dameDatos() {
-
+        
         String ruta = "D:/Documents/NetBeansProjects/AppTPI/src/main/java/com/practica/apptpi/conexionBD/credenciales.txt";
         
         String datos[] = new String[3];
@@ -43,7 +43,7 @@ public class ConectorBD {
     
     public static Connection dameConexion() throws SQLException {
         try {
-
+            
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             
             String datos[] = dameDatos();

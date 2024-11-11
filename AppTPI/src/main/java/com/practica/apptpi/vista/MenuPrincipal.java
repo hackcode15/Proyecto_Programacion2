@@ -12,9 +12,10 @@ public class MenuPrincipal {
     private Autenticacion autenticacion;
     private UsuarioDAO usuarioDAO;
     private ClienteControlador controladorDeCliente;
+    private MecanicoControlador controladorDeMecanico;
     private VehiculoControlador controladorDeVehiculo;
-    private ServicioControlador controladorDeServicio;
     private TurnoControlador controladorDeTurno;
+    private ServicioControlador controladorDeServicio;
     
     public MenuPrincipal() {
         sc = new Scanner(System.in);
@@ -22,8 +23,9 @@ public class MenuPrincipal {
         usuarioDAO = new UsuarioDAO();
         controladorDeCliente = new ClienteControlador();
         controladorDeVehiculo = new VehiculoControlador();
-        controladorDeServicio = new ServicioControlador();
         controladorDeTurno = new TurnoControlador();
+        controladorDeMecanico = new MecanicoControlador();
+        controladorDeServicio = new ServicioControlador();
     }
 
     public void iniciar() {
@@ -97,7 +99,7 @@ public class MenuPrincipal {
                 controladorDeCliente.registrarseComoCliente();
                 break;
             case 2:
-                System.out.println("Elejiste seleccionar como mecanico");
+                controladorDeMecanico.agregarMecanico();
                 break;
             case 0:
                 System.out.println("Volviendo al menu principal");
@@ -112,6 +114,8 @@ public class MenuPrincipal {
 
     private void menuMecanico(Usuario usuarioLogueado) {
         while (true) {
+            // FUNCIONES DISPONIBLES PARA LOS MECANICOS TERMINADOS
+            // TERMINADO
             System.out.println("\n====================== MENÚ MECANICO =========================");
             System.out.println("****************************************************************");
             System.out.println("1. Ver mis datos");
@@ -121,16 +125,15 @@ public class MenuPrincipal {
             System.out.println("4. Ver lista de clientes");
             System.out.println("5. Buscar cliente por DNI");
             System.out.println("****************************************************************");
-            System.out.println("6. Agregar Servicio (No disponible)");
-            System.out.println("7. Ver lista de Servicios (No disponible)");
-            System.out.println("8. Modificar Servicios(No disponible)");
-            System.out.println("9. Eliminar Servicio (No disponible)");
+            System.out.println("6. Agregar Servicio");
+            System.out.println("7. Ver lista de Servicios");
+            System.out.println("8. Modificar Servicios");
+            System.out.println("9. Eliminar Servicio ");
             System.out.println("****************************************************************");
-            System.out.println("10. Ver todos vehiculos registrados (No disponible)");
-            System.out.println("11. Buscar vehiculo (No disponible)");
+            System.out.println("10. Ver todos vehiculos registrados");
+            System.out.println("11. Buscar vehiculo");
             System.out.println("****************************************************************");
-            System.out.println("12. Ver todos los turnos solicitados (No disponible)");
-            System.out.println("13. Mas funciones... (No disponible)");
+            System.out.println("12. Ver todos los turnos solicitados");
             System.out.println("****************************************************************");
             System.out.println("0. Cerrar Sesion");
             System.out.print("Seleccione una opción: ");
@@ -138,13 +141,27 @@ public class MenuPrincipal {
 
             switch (opcion) {
                 case 1:
-                    System.out.println("Elejiste ver mis datos");
+                    controladorDeMecanico.verMiInformacion(usuarioLogueado);
                     break;
                 case 2:
-                    System.out.println("Elejiste actualizar mis datos");
+                    controladorDeMecanico.actualizarMecanico(usuarioLogueado);
                     break;
                 case 3:
-                    System.out.println("Elejiste eliminar mi cuenta");
+                    System.out.println("== ELIMINARAS TU CUENTA DE MECANICO ==");
+                    System.out.print("¿Estas seguro de eliminar tu cuenta? (Si / No):");
+                    String eleccion = sc.next();
+
+                    if (eleccion.equalsIgnoreCase("Si")) {
+
+                        controladorDeMecanico.eliminarMecanico(usuarioLogueado);
+                        
+                        return;
+
+                    } else if (eleccion.equalsIgnoreCase("No")) {
+                        System.out.println("Cancelaste la eliminacion de tu cuenta");
+                    } else {
+                        System.out.println("Opcion incorrecta");
+                    }
                     break;
                 case 4:
                     controladorDeCliente.listarClientes(usuarioLogueado);
@@ -153,29 +170,25 @@ public class MenuPrincipal {
                     controladorDeCliente.verDatos(usuarioLogueado);
                     break;
                 case 6:
-                    System.out.println("No disponible");
+                    controladorDeServicio.agregarServicio(usuarioLogueado);
                     break;
                 case 7:
-                    System.out.println("No disponible");
+                    controladorDeServicio.listarServicios();
                     break;
                 case 8:
-                    System.out.println("No disponible");
+                    controladorDeServicio.modificarServicio(usuarioLogueado);
                     break;
                 case 9:
-                    System.out.println("No disponible");
+                    controladorDeServicio.eliminarServicio(usuarioLogueado);
                     break;
                 case 10:
-                    System.out.println("No disponible");
+                    controladorDeVehiculo.mostrarTodosLosVehiculos(usuarioLogueado);
                     break;
                 case 11:
-                    System.out.println("No disponible");
+                    controladorDeVehiculo.buscarVehiculo(usuarioLogueado);
                     break;
                 case 12:
-                    //System.out.println("No disponible");
                     controladorDeTurno.listarInformacionCompletaDeLosTurnos(usuarioLogueado);
-                    break;
-                case 13:
-                    System.out.println("No disponible");
                     break;
                 case 0:
                     System.out.println("Cerrando sesion...");
@@ -189,21 +202,22 @@ public class MenuPrincipal {
     private void menuCliente(Usuario usuarioLogueado) {
         while (true) {
             // FUNCIONES DISPONIBLES PARA LOS CLIENTES TERMINADO
+            // TERMINADO
             System.out.println("\n====================== MENÚ CLIENTE =========================");
-            System.out.println("*listo**************************************************************");
+            System.out.println("***************************************************************");
             System.out.println("1. Ver mis datos personales");
             System.out.println("2. Actualizar mis datos");
             System.out.println("3. Eliminar mi cuenta");
-            System.out.println("*listo**************************************************************");
+            System.out.println("***************************************************************");
             System.out.println("4. Agregar mi vehiculo");
             System.out.println("5. Modificar mi vehiculo");
             System.out.println("6. Retirar mi vehiculo");
             System.out.println("7. Ver mis vehiculos registrados");
-            System.out.println("*en proceso**************************************************************");
+            System.out.println("***************************************************************");
             System.out.println("8. Solicitar Turno para un servicio");
-            System.out.println("9. Cancelar turno (No disponible)");
-            System.out.println("10. Ver mis turnos (No disponible)");
-            System.out.println("*listo**************************************************************");
+            System.out.println("9. Cancelar turno");
+            System.out.println("10. Ver mis turnos");
+            System.out.println("***************************************************************");
             System.out.println("0. Cerrar sesion");
             System.out.print("Seleccione una opción: ");
             int opcion = sc.nextInt();
@@ -216,7 +230,7 @@ public class MenuPrincipal {
                     controladorDeCliente.modificarMisDatos(usuarioLogueado);
                     break;
                 case 3:
-                    System.out.println("AL ELIMINAR TU CUENTA EN CASO DE TENER PEDIDOS DE TURNOS PARA SERVICIOS\n Y TUS VEHICULOS REGISTRADOS TAMBIEN SERAN ELIMINADOS");
+                    System.out.println("AL ELIMINAR TU CUENTA EN CASO DE TENER PEDIDOS DE TURNOS PARA SERVICIOS Y TUS VEHICULOS REGISTRADOS TAMBIEN SERAN ELIMINADOS");
                     System.out.print("¿Estas seguro de eliminar tu cuenta? (Si / No):");
                     String eleccion = sc.next();
 
@@ -224,7 +238,7 @@ public class MenuPrincipal {
 
                         controladorDeCliente.eliminarMiCuenta(usuarioLogueado);
                         
-                        return;
+                        return; // me lleva a menu inicial
 
                     } else if (eleccion.equalsIgnoreCase("No")) {
                         System.out.println("Cancelaste la eliminacion de tu cuenta");
@@ -248,10 +262,10 @@ public class MenuPrincipal {
                     controladorDeTurno.solicitarTurno(usuarioLogueado);
                     break;
                 case 9:
-                    System.out.println("No disponible");
+                    controladorDeTurno.cancelarTurno(usuarioLogueado);
                     break;
                 case 10:
-                    System.out.println("No disponible");
+                    controladorDeTurno.listarMisTurnos(usuarioLogueado);
                     break;
                 case 0:
                     System.out.println("Cerrando sesion...");
@@ -263,6 +277,4 @@ public class MenuPrincipal {
         }
     }
     
-    // -.
-
 }
