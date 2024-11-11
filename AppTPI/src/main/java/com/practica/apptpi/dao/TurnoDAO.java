@@ -6,7 +6,6 @@ import com.practica.apptpi.crud.OperacionesCrudAdaptadora;
 import com.practica.apptpi.modelo.Servicio;
 import com.practica.apptpi.modelo.Turno;
 import java.sql.*;
-import java.util.Date;
 import java.util.*;
 
 public class TurnoDAO extends OperacionesCrudAdaptadora<Turno> {

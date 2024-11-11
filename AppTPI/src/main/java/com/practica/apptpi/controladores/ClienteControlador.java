@@ -5,7 +5,6 @@ import com.practica.apptpi.modelo.Cliente;
 import com.practica.apptpi.modelo.Usuario;
 import java.util.*;
 
-// TERMINADO
 public class ClienteControlador {
 
     private ClienteDAO clienteDAO;
@@ -16,25 +15,29 @@ public class ClienteControlador {
         sc = new Scanner(System.in);
     }
 
-    /*
-    PERMISOS DE CLIENTES
-    registrarse
-    ver los datos de su cuenta
-    modificar los datos de su cuenta
-    eliminar su propia cuenta
-     */
- /*
-    PERMISOS DE MECANICO
-    ver la lista completa de clientes (con restrincion de datos personales)
-    buscar un cliente en especifico y ver sus datos (con restrincion de datos personales)
-     */
     // usu del metodo: create
     public void registrarseComoCliente() {
 
         System.out.println("== REGISTRATE COMO CLIENTE ==");
 
-        System.out.print("Digite su DNI: ");
-        int dni = sc.nextInt();
+        // Capturo el posible error de entrada en dni, capturando la excepcion
+        boolean entradaCorrecta = false;
+        int dni = 0;
+        do{
+            
+            try {
+
+                System.out.print("Digite su DNI: ");
+                dni = sc.nextInt();
+
+                entradaCorrecta = true;
+
+            } catch (InputMismatchException e) {
+                System.out.println("Error: debes introducir un valor numerico");
+                sc.nextLine();
+            }
+
+        }while(!entradaCorrecta);
 
         sc.nextLine();
         System.out.print("Nombre: ");
@@ -80,7 +83,6 @@ public class ClienteControlador {
     }
 
     // uso del metodo: read
-    // SOLO LOS MECANICOS PUEDEN VER LA LISTA COMPLETA DE CLIENTES
     public void listarClientes(Usuario usuarioActual) {
 
         if (usuarioActual.getRol().equalsIgnoreCase("Mecanico")) {
@@ -122,12 +124,8 @@ public class ClienteControlador {
     }
 
     // usu del metodo: update
-    // Un mecanico no puede tener acceso a este metodo
-    // SOLO LOS CLIENTES PUEDEN MODIFICAR SUS DATOS
-    // EL CLIENTE ACTUAL LOGUEADO SOLO PUEDE MODIFICAR SU CUENTA
     public void modificarMisDatos(Usuario usuarioActual) {
 
-        // Manejo de error
         if (!usuarioActual.getRol().equalsIgnoreCase("Cliente")) {
             System.out.println("Error: no tienes accceso para modificar cliente");
             return;
@@ -135,20 +133,6 @@ public class ClienteControlador {
 
         System.out.println("== ACTUALIZA TUS DATOS ==");
 
-        /*System.out.print("Digite su DNI: ");
-        int dni = sc.nextInt();*/
-        // Manejo de error
-        /*if (dni != usuarioActual.getDni()) {
-            System.out.println("No puedes modificar datos de otro cliente");
-            return;
-        }*/
-        //sc.nextLine();
-        //Cliente cliente = clienteDAO.searchByDni(dni);
-        // Manejo de error
-        /*if (cliente == null) {
-            System.out.println("Error: el cliente no existe");
-            return;
-        }*/
         Cliente cliente = clienteDAO.searchByDni(usuarioActual.getDni());
 
         System.out.println("Hola \"" + cliente.getNombre() + "\", estas por actualizar tus datos");
@@ -177,9 +161,6 @@ public class ClienteControlador {
     }
 
     // usu del metodo: delete
-    // NO TIENEN ACCESO LOS MECANICOS A ESTE METODO
-    // SOLO LOS CLIENTES PUEDEN ELIMINAR SU CUENTA
-    // EL CLIENTE ACTUAL LOGUEADO SOLO PUEDE ELIMINAR SU CUENTA
     public void eliminarMiCuenta(Usuario usuarioActual) {
 
         if (!usuarioActual.getRol().equalsIgnoreCase("Cliente")) {
@@ -196,15 +177,30 @@ public class ClienteControlador {
     }
 
     // usu del metodo: searchByDni
-    // TANTO LOS CLIENTES COMO LOS MECANICOS TIENEN ACCESO A ESTE METODO
-    // CON RESTRINCIONES DE DATOS, DEPENDIENDO EL ROL DEL USUARIO LOGUEADO
     public void verDatos(Usuario usuarioActual) {
 
         if (usuarioActual.getRol().equalsIgnoreCase("Mecanico")) {
 
             System.out.println("== OBTENER INFORMACION DEL CLIENTE ==");
-            System.out.print("Digite su DNI: ");
-            int dni = sc.nextInt();
+
+            // Capturo el posible error de entrada en dni, capturando la excepcion
+            boolean entradaCorrecta = false;
+            int dni = 0;
+            do{
+                
+                try {
+
+                    System.out.print("Digite el DNI: ");
+                    dni = sc.nextInt();
+
+                    entradaCorrecta = true;
+
+                } catch (InputMismatchException e) {
+                    System.out.println("Error: debes introducir un valor numerico");
+                    sc.nextLine();
+                }
+
+            }while(!entradaCorrecta);
 
             Cliente cliente = clienteDAO.searchByDni(dni);
 

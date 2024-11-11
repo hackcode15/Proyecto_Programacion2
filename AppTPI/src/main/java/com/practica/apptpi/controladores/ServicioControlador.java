@@ -16,7 +16,6 @@ public class ServicioControlador {
     }
     
     // usu del metodo: create
-    // solo los mecanicos tienen acceso
     public void agregarServicio(Usuario usuarioActual){
         
         if(!usuarioActual.getRol().equalsIgnoreCase("Mecanico")){
@@ -29,9 +28,25 @@ public class ServicioControlador {
         //sc.nextLine();
         System.out.print("Nombre: ");
         String nombre = sc.nextLine();
-        
-        System.out.print("Costo: $");
-        double costo = sc.nextDouble();
+
+        // Capturo el posible error de entrada en costo, capturando la excepcion
+        boolean entradaCorrecta = false;
+        double costo = 0;
+        do{
+            
+            try {
+
+                System.out.print("Costo: $");
+                costo = sc.nextDouble();
+
+                entradaCorrecta = true;
+
+            } catch (InputMismatchException e) {
+                System.out.println("Error: debes introducir un valor numerico");
+                sc.nextLine();
+            }
+
+        }while(!entradaCorrecta);
         
         Servicio servicio = Servicio.builder()
                 .nombre(nombre)
@@ -45,7 +60,6 @@ public class ServicioControlador {
     }
     
     // uso del metodo: read
-    // tanto como cliente y mecanicos pueden acceder a este metodo
     public void listarServicios(){
         
         System.out.println("== TODOS LOS SERVICIOS ==");
@@ -71,7 +85,6 @@ public class ServicioControlador {
     }
     
     // usu del metodo: update
-    // solo los mecanicos pueden acceder a este metodo
     public void modificarServicio(Usuario usuarioActual){
         
         if(!usuarioActual.getRol().equalsIgnoreCase("Mecanico")){
@@ -80,9 +93,25 @@ public class ServicioControlador {
         }
         
         System.out.println("== MODIFICAR SERVICIO ==");
-        
-        System.out.print("Digite el ID del Servicio: ");
-        int id = sc.nextInt();
+
+        // Capturo el posible error de entrada en id, capturando la excepcion
+        boolean entradaCorrectaID = false;
+        int id = 0;
+        do{
+            
+            try {
+
+                System.out.print("Digite el ID del Servicio: ");
+                id = sc.nextInt();
+
+                entradaCorrectaID = true;
+
+            } catch (InputMismatchException e) {
+                System.out.println("Error: debes introducir un valor numerico");
+                sc.nextLine();
+            }
+
+        }while(!entradaCorrectaID);
         
         Servicio servicio = servicioDAO.searchByDni(id);
         
@@ -95,18 +124,27 @@ public class ServicioControlador {
         System.out.print("Nuevo nombre: ");
         String nombre = sc.nextLine();
         
-        System.out.print("Nuevo costo: $");
-        double costo = sc.nextDouble();
-        
-        /*System.out.print("Nuevo estado (1. DISPONIBLE / 2. NO DISPONIBLE): ");
-        int eleccion = sc.nextInt();
-        
-        // operador ternario
-        String estado = (eleccion == 1) ? "DISPONIBLE" : "NO DISPONIBLE";*/
+        // Capturo el posible error de entrada en costo, capturando la excepcion
+        boolean entradaCorrectaCosto = false;
+        double costo = 0;
+        do{
+            
+            try {
+
+                System.out.print("Nuevo costo: $");
+                costo = sc.nextDouble();
+
+                entradaCorrectaCosto = true;
+
+            } catch (InputMismatchException e) {
+                System.out.println("Error: debes introducir un valor numerico");
+                sc.nextLine();
+            }
+
+        }while(!entradaCorrectaCosto);
         
         servicio.setNombre(nombre);
         servicio.setCosto(costo);
-       // servicio.setEstado(estado);
                 
         if(servicioDAO.update(servicio)){
             System.out.println("Servicio actualizado con exito");
@@ -115,7 +153,6 @@ public class ServicioControlador {
     }
     
     // usu del metodo: delete
-    // solo los mecanicos tienen acceso a este metodo
     public void eliminarServicio(Usuario usuarioActual){
         
         if(!usuarioActual.getRol().equalsIgnoreCase("Mecanico")){
@@ -125,9 +162,25 @@ public class ServicioControlador {
         
         System.out.println("== ELIMINAR SERVICIO ==");
         
-        System.out.print("Digite el ID del Servicio: ");
-        int id = sc.nextInt();
-        
+        // Capturo el posible error de entrada en id, capturando la excepcion
+        boolean entradaCorrecta = false;
+        int id = 0;
+        do{
+            
+            try {
+
+                System.out.print("Digite el ID del Servicio: ");
+                id = sc.nextInt();
+
+                entradaCorrecta = true;
+
+            } catch (InputMismatchException e) {
+                System.out.println("Error: debes introducir un valor numerico");
+                sc.nextLine();
+            }
+
+        }while(!entradaCorrecta);
+
         Servicio servicio = servicioDAO.searchByDni(id);
         
         if(servicio == null){
