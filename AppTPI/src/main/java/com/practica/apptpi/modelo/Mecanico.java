@@ -1,6 +1,8 @@
 package com.practica.apptpi.modelo;
 
 import java.util.Date;
+
+import java.util.Date;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
