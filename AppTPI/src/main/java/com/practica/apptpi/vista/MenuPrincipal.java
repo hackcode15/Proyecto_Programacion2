@@ -9,7 +9,6 @@ import java.util.*;
 public class MenuPrincipal {
 
     private Scanner sc;
-    private Autenticacion autenticacion;
     private UsuarioDAO usuarioDAO;
     private ClienteControlador controladorDeCliente;
     private MecanicoControlador controladorDeMecanico;
@@ -19,7 +18,6 @@ public class MenuPrincipal {
     
     public MenuPrincipal() {
         sc = new Scanner(System.in);
-        autenticacion = new Autenticacion();
         usuarioDAO = new UsuarioDAO();
         controladorDeCliente = new ClienteControlador();
         controladorDeVehiculo = new VehiculoControlador();
@@ -34,17 +32,19 @@ public class MenuPrincipal {
             System.out.println("1. Iniciar Sesión");
             System.out.println("2. Registrarse");
             System.out.println("0. Salir");
+
             System.out.print("Seleccione una opción: ");
-            int opcion = sc.nextInt();
+            //int opcion = sc.nextInt();
+            String opcion = sc.nextLine(); // capturo los posibles errorres de entradas con un String
 
             switch (opcion) {
-                case 1:
+                case "1": // 1
                     menuDeLogin();
                     break;
-                case 2:
+                case "2": // 2
                     menuRegistro();
                     break;
-                case 0:
+                case "0": // 0
                     System.out.println("Programa finalizado");
                     return;
                 default:
@@ -56,9 +56,26 @@ public class MenuPrincipal {
     private void menuDeLogin() {
 
         System.out.println("\n=== INICIAR SESIÓN ===");
+    
+        // Capturo el posible error de entrada en dni, capturando la excepcion
+        boolean entradaCorrecta = false;
+        int dni = 0;
+        do{
+            
+            try {
 
-        System.out.print("DNI: ");
-        int dni = sc.nextInt();
+                System.out.print("DNI: ");
+                dni = sc.nextInt();
+
+                entradaCorrecta = true;
+
+            } catch (InputMismatchException e) {
+                System.out.println("Error: debes introducir un valor numerico");
+                sc.nextLine();
+            }
+
+        }while(!entradaCorrecta);
+
 
         sc.nextLine();
         System.out.print("Contraseña: ");
@@ -86,22 +103,24 @@ public class MenuPrincipal {
     }
 
     private void menuRegistro() {
+
         System.out.println("\n=== REGISTRARSE ===");
         System.out.println("1. Registrarse como Cliente");
         System.out.println("2. Registrarse como Mecanico");
         System.out.println("0. Volver");
         System.out.print("Seleccione una opción: ");
-        int opcion = sc.nextInt();
+        //int opcion = sc.nextInt();
+        String opcion = sc.nextLine(); // capturo los posibles errorres de entradas con un String
 
         switch (opcion) {
 
-            case 1:
+            case "1": // 1
                 controladorDeCliente.registrarseComoCliente();
                 break;
-            case 2:
+            case "2": // 2
                 controladorDeMecanico.agregarMecanico();
                 break;
-            case 0:
+            case "0": // 0
                 System.out.println("Volviendo al menu principal");
                 break;
             default:
@@ -113,9 +132,8 @@ public class MenuPrincipal {
     }
 
     private void menuMecanico(Usuario usuarioLogueado) {
+
         while (true) {
-            // FUNCIONES DISPONIBLES PARA LOS MECANICOS TERMINADOS
-            // TERMINADO
             System.out.println("\n====================== MENÚ MECANICO =========================");
             System.out.println("****************************************************************");
             System.out.println("1. Ver mis datos");
@@ -137,16 +155,17 @@ public class MenuPrincipal {
             System.out.println("****************************************************************");
             System.out.println("0. Cerrar Sesion");
             System.out.print("Seleccione una opción: ");
-            int opcion = sc.nextInt();
+            //int opcion = sc.nextInt();
+            String opcion = sc.nextLine(); // capturo los posibles errorres de entradas con un String
 
             switch (opcion) {
-                case 1:
+                case "1": // 1
                     controladorDeMecanico.verMiInformacion(usuarioLogueado);
                     break;
-                case 2:
+                case "2": // 2
                     controladorDeMecanico.actualizarMecanico(usuarioLogueado);
                     break;
-                case 3:
+                case "3": // 3
                     System.out.println("== ELIMINARAS TU CUENTA DE MECANICO ==");
                     System.out.print("¿Estas seguro de eliminar tu cuenta? (Si / No):");
                     String eleccion = sc.next();
@@ -163,34 +182,34 @@ public class MenuPrincipal {
                         System.out.println("Opcion incorrecta");
                     }
                     break;
-                case 4:
+                case "4": // 4
                     controladorDeCliente.listarClientes(usuarioLogueado);
                     break;
-                case 5:
+                case "5": // 5
                     controladorDeCliente.verDatos(usuarioLogueado);
                     break;
-                case 6:
+                case "6": // 6
                     controladorDeServicio.agregarServicio(usuarioLogueado);
                     break;
-                case 7:
+                case "7": // 7
                     controladorDeServicio.listarServicios();
                     break;
-                case 8:
+                case "8": // 8
                     controladorDeServicio.modificarServicio(usuarioLogueado);
                     break;
-                case 9:
+                case "9": // 9
                     controladorDeServicio.eliminarServicio(usuarioLogueado);
                     break;
-                case 10:
+                case "10": // 10
                     controladorDeVehiculo.mostrarTodosLosVehiculos(usuarioLogueado);
                     break;
-                case 11:
+                case "11": // 11
                     controladorDeVehiculo.buscarVehiculo(usuarioLogueado);
                     break;
-                case 12:
+                case "12": // 12
                     controladorDeTurno.listarInformacionCompletaDeLosTurnos(usuarioLogueado);
                     break;
-                case 0:
+                case "0": // 0
                     System.out.println("Cerrando sesion...");
                     return;
                 default:
@@ -201,8 +220,6 @@ public class MenuPrincipal {
 
     private void menuCliente(Usuario usuarioLogueado) {
         while (true) {
-            // FUNCIONES DISPONIBLES PARA LOS CLIENTES TERMINADO
-            // TERMINADO
             System.out.println("\n====================== MENÚ CLIENTE =========================");
             System.out.println("***************************************************************");
             System.out.println("1. Ver mis datos personales");
@@ -220,16 +237,17 @@ public class MenuPrincipal {
             System.out.println("***************************************************************");
             System.out.println("0. Cerrar sesion");
             System.out.print("Seleccione una opción: ");
-            int opcion = sc.nextInt();
+            //int opcion = sc.nextInt();
+            String opcion = sc.nextLine(); // capturo los posibles errorres de entradas con un String
 
             switch (opcion) {
-                case 1:
+                case "1": // 1
                     controladorDeCliente.verDatos(usuarioLogueado);
                     break;
-                case 2:
+                case "2": // 2
                     controladorDeCliente.modificarMisDatos(usuarioLogueado);
                     break;
-                case 3:
+                case "3": // 3
                     System.out.println("AL ELIMINAR TU CUENTA EN CASO DE TENER PEDIDOS DE TURNOS PARA SERVICIOS Y TUS VEHICULOS REGISTRADOS TAMBIEN SERAN ELIMINADOS");
                     System.out.print("¿Estas seguro de eliminar tu cuenta? (Si / No):");
                     String eleccion = sc.next();
@@ -246,28 +264,28 @@ public class MenuPrincipal {
                         System.out.println("Opcion incorrecta");
                     }
                     break;
-                case 4:
+                case "4": // 4
                     controladorDeVehiculo.agregarVehiculo(usuarioLogueado);
                     break;
-                case 5:
+                case "5": // 5
                     controladorDeVehiculo.actualizarVehiculo(usuarioLogueado);
                     break;
-                case 6:
+                case "6": // 6
                     controladorDeVehiculo.eliminarVehiculo(usuarioLogueado);
                     break;
-                case 7:
+                case "7": // 7
                     controladorDeVehiculo.verMisVehiculosRegistrados(usuarioLogueado);
                     break;
-                case 8:
+                case "8": // 8
                     controladorDeTurno.solicitarTurno(usuarioLogueado);
                     break;
-                case 9:
+                case "9": // 9
                     controladorDeTurno.cancelarTurno(usuarioLogueado);
                     break;
-                case 10:
+                case "10": // 10
                     controladorDeTurno.listarMisTurnos(usuarioLogueado);
                     break;
-                case 0:
+                case "0": // 0
                     System.out.println("Cerrando sesion...");
                     return;
                 default:
