@@ -20,8 +20,24 @@ public class MecanicoControlador {
 
         System.out.println("== AGREGAR MECANICO ==");
 
-        System.out.print("Digite su DNI: ");
-        int dni = sc.nextInt();
+        // Capturo el posible error de entrada en dni, capturando la excepcion
+        boolean entradaCorrecta = false;
+        int dni = 0;
+        do{
+            
+            try {
+
+                System.out.print("Digite su DNI: ");
+                dni = sc.nextInt();
+
+                entradaCorrecta = true;
+
+            } catch (InputMismatchException e) {
+                System.out.println("Error: debes introducir un valor numerico");
+                sc.nextLine();
+            }
+
+        }while(!entradaCorrecta);
 
         sc.nextLine();
         System.out.print("Nombre: ");
@@ -40,9 +56,25 @@ public class MecanicoControlador {
         System.out.print("Telefono: ");
         String telefono = sc.nextLine();
 
-        System.out.print("Sueldo $: ");
-        double sueldo = sc.nextDouble();
+        // Capturo el posible error de entrada en sueldo, capturando la excepcion
+        boolean entradaCorrectaID = false;
+        double sueldo = 0;
+        do{
+            
+            try {
 
+                System.out.print("Sueldo $: ");
+                sueldo = sc.nextDouble();
+
+                entradaCorrectaID = true;
+
+            } catch (InputMismatchException e) {
+                System.out.println("Error: debes introducir un valor numerico");
+                sc.nextLine();
+            }
+
+        }while(!entradaCorrectaID);
+        
         Mecanico mecanico = Mecanico.builder()
                 .dni(dni)
                 .nombre(nombre)
@@ -112,9 +144,25 @@ public class MecanicoControlador {
 
         System.out.print("Nuevo Correo: ");
         String nuevoCorreo = sc.nextLine();
+    
+        // Capturo el posible error de entrada en sueldo, capturando la excepcion
+        boolean entradaCorrectaID = false;
+        double nuevoSueldo = 0;
+        do{
+            
+            try {
 
-        System.out.print("Nuevo sueldo $: ");
-        double nuevoSueldo = sc.nextDouble();
+                System.out.print("Nuevo sueldo $: ");
+                nuevoSueldo = sc.nextDouble();
+
+                entradaCorrectaID = true;
+
+            } catch (InputMismatchException e) {
+                System.out.println("Error: debes introducir un valor numerico");
+                sc.nextLine();
+            }
+
+        }while(!entradaCorrectaID);
 
         mecanico.setContrasena(nuevaContrasena);
         mecanico.setTelefono(nuevaTelefono);

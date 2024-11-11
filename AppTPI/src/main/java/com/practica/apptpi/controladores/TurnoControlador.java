@@ -25,7 +25,6 @@ public class TurnoControlador {
     }
 
     // uso del metodo: create
-    // solo los clientes pueden cargar turnos
     public void solicitarTurno(Usuario usuarioActual) {
 
         if (!usuarioActual.getRol().equalsIgnoreCase("Cliente")) {
@@ -35,8 +34,24 @@ public class TurnoControlador {
 
         System.out.println("== SOLICITA UN TURNO DE SERVICIO PARA TU VEHICULO ==");
 
-        System.out.print("Agregue su vehiculo con su ID: ");
-        int id_vehiculo = sc.nextInt();
+        // Capturo el posible error de entrada en id, capturando la excepcion
+        boolean entradaCorrectaIDVehiculo = false;
+        int id_vehiculo = 0;
+        do{
+            
+            try {
+
+                System.out.print("Agregue su vehiculo con su ID: ");
+                id_vehiculo = sc.nextInt();
+
+                entradaCorrectaIDVehiculo = true;
+
+            } catch (InputMismatchException e) {
+                System.out.println("Error: debes introducir un valor numerico");
+                sc.nextLine();
+            }
+
+        }while(!entradaCorrectaIDVehiculo);
 
         Vehiculo vehiculo = vehiculoDAO.searchByDni(id_vehiculo);
 
@@ -74,8 +89,24 @@ public class TurnoControlador {
 
             System.out.println("");
 
-            System.out.print("Digite el ID del servicio a solicitar: ");
-            int id_servicio = sc.nextInt();
+            // Capturo el posible error de entrada en id, capturando la excepcion
+            boolean entradaCorrecta = false;
+            int id_servicio = 0;
+            do{
+                
+                try {
+
+                    System.out.print("Digite el ID del servicio a solicitar: ");
+                    id_servicio = sc.nextInt();
+
+                    entradaCorrecta = true;
+
+                } catch (InputMismatchException e) {
+                    System.out.println("Error: debes introducir un valor numerico");
+                    sc.nextLine();
+                }
+
+            }while(!entradaCorrecta);
 
             Servicio servicio = servicioDAO.searchByDni(id_servicio);
 
@@ -120,7 +151,6 @@ public class TurnoControlador {
     }
 
     // uso del metodo personalizado: leerTurnos
-    // solo los mecanicos pueden acceder
     public void listarInformacionCompletaDeLosTurnos(Usuario usuarioActual) {
 
         if (!usuarioActual.getRol().equalsIgnoreCase("Mecanico")) {
@@ -161,7 +191,6 @@ public class TurnoControlador {
     }
 
     // uso del metodo: leerTurnosDeUnCliente
-    // solo los clientes tienen acceso
     public void listarMisTurnos(Usuario usuarioActual) {
 
         if (!usuarioActual.getRol().equalsIgnoreCase("Cliente")) {
@@ -209,8 +238,24 @@ public class TurnoControlador {
         
         listarMisTurnos(usuarioActual);
         
-        System.out.println("Digite el ID del turno a eliminar: ");
-        int id_turno = sc.nextInt();
+        // Capturo el posible error de entrada en id, capturando la excepcion
+        boolean entradaCorrecta = false;
+        int id_turno = 0;
+        do{
+            
+            try {
+
+                System.out.println("Digite el ID del turno a eliminar: ");
+                id_turno = sc.nextInt();
+
+                entradaCorrecta = true;
+
+            } catch (InputMismatchException e) {
+                System.out.println("Error: debes introducir un valor numerico");
+                sc.nextLine();
+            }
+
+        }while(!entradaCorrecta);
         
         Turno turno = turnoDAO.searchByDni(id_turno);
         
@@ -230,6 +275,4 @@ public class TurnoControlador {
         
     }
 
-    
-    
 }

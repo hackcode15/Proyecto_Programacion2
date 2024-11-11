@@ -17,7 +17,6 @@ public class VehiculoControlador {
     }
 
     // usu del metodo: create
-    // Acesso solo para los clientes
     public void agregarVehiculo(Usuario usuarioActual) {
 
         if (!usuarioActual.getRol().equalsIgnoreCase("Cliente")) {
@@ -33,9 +32,25 @@ public class VehiculoControlador {
         System.out.print("Modelo: ");
         String modelo = sc.nextLine();
 
-        System.out.print("Año: ");
-        int anio = sc.nextInt();
+        // Capturo el posible error de entrada en año, capturando la excepcion
+        boolean entradaCorrecta = false;
+        int anio = 0;
+        do{
+            
+            try {
 
+                System.out.print("Año: ");
+                anio = sc.nextInt();
+
+                entradaCorrecta = true;
+
+            } catch (InputMismatchException e) {
+                System.out.println("Error: debes introducir un valor numerico");
+                sc.nextLine();
+            }
+
+        }while(!entradaCorrecta);
+        
         Vehiculo vehiculo = Vehiculo.builder()
                 .marca(marca)
                 .modelo(modelo)
@@ -50,7 +65,6 @@ public class VehiculoControlador {
     }
 
     // uso del metodo: read
-    // Solo los mecanicos tienen acceso a ver la lista de todos los vehiculos
     public void listarVehiculos(Usuario usuarioActual) {
 
         if (!usuarioActual.getRol().equalsIgnoreCase("Mecanico")) {
@@ -82,7 +96,6 @@ public class VehiculoControlador {
     }
 
     // usu del metodo: update
-    // solo los clientes pueden modificar sus vehiculos
     public void actualizarVehiculo(Usuario usuarioActual) {
 
         if (!usuarioActual.getRol().equalsIgnoreCase("Cliente")) {
@@ -92,8 +105,24 @@ public class VehiculoControlador {
 
         System.out.println("== ACTUALIZAR LOS DATOS DE TU VEHICULO ==");
 
-        System.out.print("Digite el ID de su vehiculo: ");
-        int id = sc.nextInt();
+        // Capturo el posible error de entrada en id, capturando la excepcion
+        boolean entradaCorrectaID = false;
+        int id = 0;
+        do{
+            
+            try {
+
+                System.out.print("Digite el ID de su vehiculo: ");
+                id = sc.nextInt();
+
+                entradaCorrectaID = true;
+
+            } catch (InputMismatchException e) {
+                System.out.println("Error: debes introducir un valor numerico");
+                sc.nextLine();
+            }
+
+        }while(!entradaCorrectaID);
 
         Vehiculo vehiculo = vehiculoDAO.searchByDni(id);
 
@@ -113,8 +142,24 @@ public class VehiculoControlador {
         System.out.print("Nuevo modelo: ");
         String modelo = sc.nextLine();
 
-        System.out.print("Nuevo año: ");
-        int anio = sc.nextInt();
+        // Capturo el posible error de entrada en año, capturando la excepcion
+        boolean entradaCorrectaAnio = false;
+        int anio = 0;
+        do{
+            
+            try {
+
+                System.out.print("Nuevo año: ");
+                anio = sc.nextInt();
+
+                entradaCorrectaAnio = true;
+
+            } catch (InputMismatchException e) {
+                System.out.println("Error: debes introducir un valor numerico");
+                sc.nextLine();
+            }
+
+        }while(!entradaCorrectaAnio);
 
         vehiculo.setMarca(marca);
         vehiculo.setModelo(modelo);
@@ -127,7 +172,6 @@ public class VehiculoControlador {
     }
 
     // usu del metodo: delete
-    // solo los clientes pueden eliminar su vehiculo
     public void eliminarVehiculo(Usuario usuarioActual) {
 
         if (!usuarioActual.getRol().equalsIgnoreCase("Cliente")) {
@@ -142,8 +186,24 @@ public class VehiculoControlador {
 
         if (eleccion.equalsIgnoreCase("si")) {
 
-            System.out.print("Digite el ID de su vehiculo: ");
-            int id = sc.nextInt();
+            // Capturo el posible error de entrada en id, capturando la excepcion
+            boolean entradaCorrectaID = false;
+            int id = 0;
+            do{
+                
+                try {
+
+                    System.out.print("Digite el ID de su vehiculo: ");
+                    id = sc.nextInt();
+
+                    entradaCorrectaID = true;
+
+                } catch (InputMismatchException e) {
+                    System.out.println("Error: debes introducir un valor numerico");
+                    sc.nextLine();
+                }
+
+            }while(!entradaCorrectaID);
 
             Vehiculo vehiculo = vehiculoDAO.searchByDni(id);
 
@@ -170,7 +230,6 @@ public class VehiculoControlador {
     }
 
     // usu del metodo: searchByDni - search by id_vehiculo
-    // solo los mecanicos pueden tener acceso
     public void buscarVehiculo(Usuario usuarioActual) {
 
         if (!usuarioActual.getRol().equalsIgnoreCase("Mecanico")) {
@@ -180,8 +239,24 @@ public class VehiculoControlador {
 
         System.out.println("== BUSCA UN VEHICULO == ");
 
-        System.out.print("Digite el ID del vehiculo: ");
-        int id = sc.nextInt();
+        // Capturo el posible error de entrada en id, capturando la excepcion
+        boolean entradaCorrectaID = false;
+        int id = 0;
+        do{
+            
+            try {
+
+                System.out.print("Digite el ID del vehiculo: ");
+                id = sc.nextInt();
+
+                entradaCorrectaID = true;
+
+            } catch (InputMismatchException e) {
+                System.out.println("Error: debes introducir un valor numerico");
+                sc.nextLine();
+            }
+
+        }while(!entradaCorrectaID);
 
         Vehiculo vehiculo = vehiculoDAO.searchByDni(id);
 
@@ -211,7 +286,6 @@ public class VehiculoControlador {
     }
 
     // usu del metodo: listarTusVehiculosRegistrados
-    // Solo los clientes tienen acceso
     public void verMisVehiculosRegistrados(Usuario usuarioActual) {
 
         if (!usuarioActual.getRol().equalsIgnoreCase("Cliente")) {
@@ -241,7 +315,6 @@ public class VehiculoControlador {
     }
     
     // uso del metodo: listarTodosLosVehiculosRegistrados
-    // solo los mecanicos tienen acceso
     public void mostrarTodosLosVehiculos(Usuario usuarioActual){
         
         System.out.println("== TODOS LOS VEHICULOS REGISTRADOS ==");
