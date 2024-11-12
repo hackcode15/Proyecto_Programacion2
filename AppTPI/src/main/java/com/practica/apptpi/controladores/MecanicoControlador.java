@@ -127,7 +127,8 @@ public class MecanicoControlador {
     // uso del metodo: update
     public void actualizarMecanico(Usuario usuarioActual) {
 
-        System.out.println("== ACTUALIZAR TUS DATOS ==");
+        System.out.println("== ENTER PARA ACTUALIZAR TUS DATOS ==");
+        sc.nextLine();
 
         Mecanico mecanico = mecanicoDAO.searchByDni(usuarioActual.getDni());
 
