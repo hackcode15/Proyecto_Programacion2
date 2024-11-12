@@ -79,6 +79,7 @@ GO
 
 
 -- ************************************ SEDEERS (instertar elementos en la base de datos)***********************************************
+--ES PARA REALIZAR PRUEBAS EN LA BD
 
 -- Seeder para la tabla Usuario
 INSERT INTO usuario (dni, nombre, apellido, contrasena, correo, telefono, rol)
@@ -147,8 +148,7 @@ GO
 
 -- ******************************************** PROCEDIMIENTOS ALMACENADOS ********************************************************************
 
---EJECUTAR EN CUALQUIER ORDEN IMPORTANTE SIN ELLOS NO FUNCIONA EL PROGRAMA (UTILIZADOS POR CLASES DAO Y DTO)
---SI APARECE ERROR EN TODO ESTE BLOQUE SEÑALANDO LOS MOMBRES DE PROCEDIMIENTOS ES PORQUE YA ESTAN CREADOS 
+--EJECUTAR EN CUALQUIER ORDEN ***IMPORTANTE*** SIN ELLOS NO FUNCIONA EL PROGRAMA (UTILIZADOS POR CLASES DAO Y DTO)
 
 -- DE LA TABLA ** MECANICO **
 
