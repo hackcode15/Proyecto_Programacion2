@@ -103,8 +103,8 @@ public class VehiculoControlador {
             return;
         }
 
-        System.out.println("== ACTUALIZAR LOS DATOS DE TU VEHICULO ==");
-
+        System.out.println("== ENTER PARA ACTUALIZAR LOS DATOS DE TU VEHICULO ==");
+        sc.nextLine();
         // Capturo el posible error de entrada en id, capturando la excepcion
         boolean entradaCorrectaID = false;
         int id = 0;

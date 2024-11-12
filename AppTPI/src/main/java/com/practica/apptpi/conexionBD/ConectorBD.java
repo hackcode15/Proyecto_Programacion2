@@ -16,7 +16,6 @@ public class ConectorBD {
     public static String[] dameDatos() {
         
         String ruta = "D:/Documents/Proyecto_Programacion2/AppTPI/src/main/java/com/practica/apptpi/conexionBD/credenciales.txt";
-        //String ruta = "D:/Documents/NetBeansProjects/AppTPI/src/main/java/com/practica/apptpi/conexionBD/credenciales.txt";
         
         String datos[] = new String[3];
         
